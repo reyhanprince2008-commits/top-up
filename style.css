@@ -1,0 +1,477 @@
+/* Taruh ini di paling atas CSS supaya gambar gak berantakan kalau CSS error */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+/* MODIFIKASI BIAR FOTO GAK GEPENG */
+.game-item img {
+    width: 100%;
+    /* Gunakan aspect-ratio agar kotak foto konsisten (misal 1:1 atau persegi) */
+    aspect-ratio: 1 / 1; 
+    
+    /* 'cover' biar penuh tapi gak gepeng (akan terpotong dikit biar rapi) */
+    /* ATAU pakai 'contain' kalau mau foto kelihatan 100% tanpa terpotong sama sekali */
+    object-fit: cover; 
+    
+    border-radius: 12px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Pastikan container item-nya juga pas ukurannya */
+.game-item {
+    background: var(--card-bg);
+    padding: 10px;
+    border-radius: 15px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text);
+    margin: 0;
+}
+
+.hidden { display: none; }
+.container { width: 90%; max-width: 1000px; margin: 2rem auto; }
+
+/* Navbar */
+.navbar { background: var(--card-bg); padding: 1rem 10%; border-bottom: 2px solid var(--primary); }
+.logo { font-size: 3rem; font-weight: 800; }
+.logo span { color: var(--primary); }
+
+/* Game Grid */
+.section-title { text-align: center; margin-bottom: 2rem; }
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+.game-item {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid transparent;
+}
+.game-item:hover { transform: translateY(-5px); border-color: var(--primary); }
+.game-item img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+
+/* Cards */
+.card { background: var(--card-bg); border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+.card-header { background: #334155; padding: 12px 20px; font-weight: bold; }
+.card-header span { background: var(--primary); color: #000; padding: 2px 8px; border-radius: 5px; margin-right: 10px; }
+.card-body { padding: 20px; }
+
+/* Input & Nickname */
+.input-group { display: flex; gap: 10px; }
+input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: white; outline: none; }
+.nickname-box { margin-top: 10px; padding: 10px; background: #064e3b; color: #34d399; border-radius: 8px; font-weight: bold; }
+
+/* Diamond Items */
+.grid-items { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.item-card { background: #334155; padding: 15px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; text-align: center; }
+.item-card.active { border-color: var(--primary); background: #475569; }
+
+.btn-primary { width: 100%; padding: 15px; background: var(--primary); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+.btn-back { background: none; border: none; color: var(--primary); cursor: pointer; margin-bottom: 1rem; font-weight: bold; }
+/* Tampilan Grid Pembayaran */
+.payment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Membagi jadi 2 kolom */
+    gap: 10px;
+}
+
+.pay-option input {
+    display: none; /* Sembunyikan radio button asli */
+}
+
+.pay-box {
+    background: #334155;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    transition: 0.2s;
+}
+
+.pay-box img {
+    height: 20px;
+    filter: brightness(1.2);
+}
+
+.pay-box span {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Efek pas diklik/pilih */
+.pay-option input:checked + .pay-box {
+    border-color: var(--primary);
+    background: #475569;
+}
+
+/* Khusus QRIS biar tampil beda */
+.pay-box.qris {
+    grid-column: span 2; /* QRIS memanjang penuh */
+    background: #f8fafc;
+    color: #0f172a;
+}
+/* --- MODIFIKASI: HEADER MELAYANG (STICKY) --- */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* --- MODIFIKASI: LOGO DI NOMINAL DIAMOND --- */
+.item-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-top: 25px; /* Ruang untuk logo */
+}
+
+/* Gimmick logo diamond (bisa diganti icon beneran) */
+.item-card::before {
+    content: "💎"; /* Icon Diamond */
+    position: absolute;
+    top: 5px;
+    font-size: 1.2rem;
+}
+
+/* Tambahan agar grid item lebih rapi */
+.grid-items {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+}
+/* --- MODIFIKASI: NORMALISASI QRIS & UKURAN LOGO --- */
+
+/* 1. Menghilangkan background putih pada QRIS agar seragam */
+.pay-box.qris {
+    background: #334155 !important; /* Warna gelap sama dengan yang lain */
+    color: var(--text) !important;
+    border: 2px solid transparent;
+}
+
+/* 2. Cara memperbesar foto/logo pembayaran */
+.pay-box img {
+    height: 40px; /* Ubah angka ini (misal 50px atau 60px) untuk memperbesar logo */
+    width: auto;
+    margin-bottom: 8px;
+    object-fit: contain;
+    filter: brightness(1); /* Agar logo lebih terang */
+}
+
+/* 3. Memberi warna orange pada border saat QRIS dipilih (biar gak hilang) */
+.pay-option input:checked + .pay-box.qris {
+    border-color: var(--primary);
+    background: #475569 !important;
+}
+
+/* 4. Menyesuaikan ukuran box agar muat logo besar */
+.pay-box {
+    min-height: 100px; /* Menambah tinggi kotak agar logo besar tidak sesak */
+    justify-content: center;
+}
+/* Animasi biar smooth saat hover */
+.item-card, .game-item, .pay-box {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efek Glassmorphism untuk Card */
+.card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Badge Diskon/Populer */
+.promo-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #e74c3c;
+    color: white;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 10;
+}
+/* --- TEMA SPIDER-MAN: R3YYTOPUP --- */
+
+:root {
+    --primary: #e62429; /* Merah Marvel */
+    --dark-bg: #050b18; /* Biru Navy Gelap */
+    --card-bg: #0a1733; /* Biru Spidey */
+    --text: #ffffff;
+    --accent: #2196f3; /* Biru Muda Aksen */
+}
+
+/* Mengubah semua Font Judul (Tag) */
+h1, h2, .logo, .card-header, .section-title {
+    font-family: 'Bangers', cursive;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.logo span {
+    color: var(--accent); /* Warna biru untuk kata 'TopUp' */
+    text-shadow: 2px 2px #000;
+}
+
+/* Modifikasi Header (Navbar) melayang dengan tekstur jaring */
+.navbar {
+    display: flex;
+    justify-content: center; /* Membuat logo ke tengah secara horizontal */
+    align-items: center;     /* Membuat logo ke tengah secara vertikal */
+    padding: 20px 0;         /* Memberi ruang atas bawah agar logo besar tidak sesak */
+    background: linear-gradient(45deg, #e62429 0%, #050b18 100%);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Card dengan efek tajam */
+.card {
+    border: 2px solid var(--primary);
+    border-radius: 0px; /* Spidey style lebih suka yang tegas/tajam */
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%); /* Potongan sudut unik */
+}
+
+.card-header {
+    background: var(--primary);
+    color: white;
+}
+
+/* Tombol Beli Gaya Spider-Man */
+.btn-primary {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    background: var(--primary);
+    border: 3px solid #000;
+    box-shadow: 5px 5px 0px #000;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0px #2196f3;
+    background: #ff2e33;
+}
+
+/* Animasi Jaring saat Item dipilih */
+.item-card.active {
+    background: var(--accent);
+    border-color: #fff;
+    box-shadow: 0 0 15px var(--accent);
+}
+
+/* Background Jaring-jaring (Opsional) */
+body {
+    background-image: 
+        radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+    background-size: 30px 30px;
+}
+/* --- PERBAIKAN TEKS & TATA LETAK PRO --- */
+
+/* 1. Atur Jarak Baris & Padding Judul agar tidak tabrakan */
+h1, h2, .card-header, .logo {
+    line-height: 1.4; /* Memberi nafas antar baris teks */
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* 2. Rapihkan Card Header */
+.card-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px !important; /* Tambah ruang biar teks gak nempel tembok */
+    font-size: 1.2rem;
+}
+
+/* 3. Rapihkan Box Pilihan Diamond (Item Card) */
+.item-card {
+    padding: 20px 10px !important;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px; /* Jarak antara angka Diamond dan Harga */
+}
+
+/* Atur teks nominal Diamond */
+.item-card b, .item-card strong, .item-card div {
+    font-size: 1.1rem;
+    margin-top: 5px;
+}
+
+/* Atur teks Harga biar kecil tapi jelas */
+.item-card small {
+    font-family: 'Inter', sans-serif; /* Pake font standar buat angka biar rapi */
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+/* 4. Perbaikan Input ID agar tidak sumpek */
+.input-group {
+    display: flex;
+    gap: 15px; /* Jarak antar kotak ID dan Zone */
+}
+
+input {
+    padding: 15px !important;
+    font-size: 1rem;
+    border-radius: 10px !important;
+}
+
+/* 5. Kasih Container Utama sedikit nafas */
+.container {
+    padding: 20px;
+    max-width: 900px;
+}
+
+/* Efek Glow tambahan biar makin Mewah */
+.item-card.active {
+    box-shadow: 0 0 20px rgba(230, 36, 41, 0.4);
+    transform: scale(1.05);
+}
+/* --- ANIMASI LOGO MENGAMBANG (FLOATING) --- */
+.logo {
+    display: inline-block;
+    animation: floating 3s ease-in-out infinite;
+    text-shadow: 0 5px 15px rgba(230, 36, 41, 0.3); /* Glow halus di bawah teks */
+}
+
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); } /* Mengambang naik 10px */
+    100% { transform: translateY(0px); }
+}
+
+/* --- PERHALUS BACKGROUND TEKS JUDUL --- */
+.section-title, #selected-game-title {
+    background: rgba(255, 255, 255, 0.05); /* Background putih transparan sangat tipis */
+    padding: 10px 20px;
+    border-radius: 50px; /* Lonjong halus */
+    display: inline-block;
+    backdrop-filter: blur(5px); /* Efek kaca halus */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 25px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+}
+
+/* --- MERAPIKAN TEKS HARGA & NOMINAL --- */
+.item-card {
+    background: linear-gradient(145deg, #1e293b, #0f172a) !important; /* Gradasi box */
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.item-card div {
+    font-size: 1rem !important;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    color: #ffffff;
+}
+
+.item-card small {
+    font-size: 0.8rem !important;
+    color: var(--accent) !important; /* Warna biru aksen untuk harga */
+    opacity: 0.9;
+}
+
+/* Efek Glow pada Container Pembayaran */
+.card-body {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 0 0 12px 12px;
+}
+#selected-game-title {
+    font-family: 'Bangers', cursive; /* Pakai font Spiderman */
+    font-size: 2.5rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0px #e62429; /* Shadow merah khas Spidey */
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 30px;
+    border-radius: 50px;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* --- RESPONSIVE DESIGN (KHUSUS HP) --- */
+@media screen and (max-width: 768px) {
+    /* 1. Perkecil ukuran Logo agar tidak memenuhi layar */
+    .logo {
+        font-size: 2rem !important; /* Ukuran lebih kecil buat HP */
+    }
+    .logo span {
+        font-size: 2rem !important;
+    }
+
+    /* 2. Perkecil Judul Game */
+    #selected-game-title {
+        font-size: 1.5rem !important;
+        padding: 8px 20px;
+    }
+
+    /* 3. Grid Game di halaman depan jadi 2 kolom (biar gak kegedean) */
+    .game-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+    }
+
+    /* 4. Grid Diamond jadi 2 kolom agar berjejer rapi */
+    #item-list {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+    }
+
+    /* 5. Grid Pembayaran jadi 2 kolom */
+    .payment-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px;
+    }
+
+    /* 6. Kotak ID dan Zone ID jadi sejajar (berjejer) tapi kecil */
+    .input-group {
+        display: flex;
+        flex-direction: row; /* Tetap berjejer ke samping */
+        gap: 10px;
+    }
+    
+    input {
+        font-size: 0.9rem !important; /* Kecilin dikit teks inputnya */
+        padding: 12px !important;
+    }
+
+    /* 7. Lebar Container dibuat mentok biar gak banyak ruang kosong */
+    .container {
+        padding: 10px;
+        width: 95%;
+    }
+
+    /* 8. Sesuaikan Card Header */
+    .card-header {
+        font-size: 1rem !important;
+        padding: 10px 15px !important;
+    }
+}
